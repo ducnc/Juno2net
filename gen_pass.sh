@@ -1,6 +1,6 @@
 #!/bin/bash
 
-cat << EOF > config.cfg
+cat  EOF > config.cfg
 
 ## Assigning IP for CONTROLLER NODE
 CON_MGNT_IP=10.10.10.51
@@ -32,6 +32,7 @@ RABBIT_PASS=`openssl rand -hex 10`
 MYSQL_PASS=`openssl rand -hex 10`
 TOKEN_PASS=`openssl rand -hex 10`
 ADMIN_PASS=`openssl rand -hex 10`
+DEMO_PASS=`openssl rand -hex 10`
 SERVICE_PASSWORD=`openssl rand -hex 10`
 METADATA_SECRET=`openssl rand -hex 10`
 

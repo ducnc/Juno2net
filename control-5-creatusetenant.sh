@@ -18,8 +18,8 @@ DEMO_TENANT=$(get_id keystone tenant-create --name=$DEMO_TENANT_NAME)
 INVIS_TENANT=$(get_id keystone tenant-create --name=$INVIS_TENANT_NAME)
 
 # Users
-ADMIN_USER=$(get_id keystone user-create --name="$ADMIN_USER_NAME" --pass="$ADMIN_PASS" --email=congtt@teststack.com)
-DEMO_USER=$(get_id keystone user-create --name="$DEMO_USER_NAME" --pass="$ADMIN_PASS" --email=congtt@teststack.com)
+ADMIN_USER=$(get_id keystone user-create --name="$ADMIN_USER_NAME" --pass="$ADMIN_PASS" --email=ducnc92@hotmail.com)
+DEMO_USER=$(get_id keystone user-create --name="$DEMO_USER_NAME" --pass="$DEMO_PASS" --email=ducnc92@hotmail.com)
 
 # Roles
 ADMIN_ROLE=$(get_id keystone role-create --name="$ADMIN_ROLE_NAME")
@@ -38,10 +38,10 @@ keystone user-role-add --user-id $DEMO_USER --role-id $MEMBER_ROLE --tenant-id $
 keystone user-role-add --user-id $DEMO_USER --role-id $MEMBER_ROLE --tenant-id $INVIS_TENANT
 
 # Configure service users/roles
-NOVA_USER=$(get_id keystone user-create --name=nova --pass="$SERVICE_PASSWORD" --tenant-id $SERVICE_TENANT --email=nova@teststack.com)
+NOVA_USER=$(get_id keystone user-create --name=nova --pass="$NOVA_PASS" --tenant-id $SERVICE_TENANT --email=nova@teststack.com)
 keystone user-role-add --tenant-id $SERVICE_TENANT --user-id $NOVA_USER --role-id $ADMIN_ROLE
 
-GLANCE_USER=$(get_id keystone user-create --name=glance --pass="$SERVICE_PASSWORD" --tenant-id $SERVICE_TENANT --email=glance@teststack.com)
+GLANCE_USER=$(get_id keystone user-create --name=glance --pass="$GLANCE_PASS" --tenant-id $SERVICE_TENANT --email=glance@teststack.com)
 keystone user-role-add --tenant-id $SERVICE_TENANT --user-id $GLANCE_USER --role-id $ADMIN_ROLE
 
 SWIFT_USER=$(get_id keystone user-create --name=swift --pass="$SERVICE_PASSWORD" --tenant-id $SERVICE_TENANT --email=swift@teststack.com)
@@ -50,10 +50,10 @@ keystone user-role-add --tenant-id $SERVICE_TENANT --user-id $SWIFT_USER --role-
 RESELLER_ROLE=$(get_id keystone role-create --name=ResellerAdmin)
 keystone user-role-add --tenant-id $SERVICE_TENANT --user-id $NOVA_USER --role-id $RESELLER_ROLE
 
-NEUTRON_USER=$(get_id keystone user-create --name=neutron --pass="$SERVICE_PASSWORD" --tenant-id $SERVICE_TENANT --email=neutron@teststack.com)
+NEUTRON_USER=$(get_id keystone user-create --name=neutron --pass="$NEUTRON_PASS" --tenant-id $SERVICE_TENANT --email=neutron@teststack.com)
 keystone user-role-add --tenant-id $SERVICE_TENANT --user-id $NEUTRON_USER --role-id $ADMIN_ROLE
 
-CINDER_USER=$(get_id keystone user-create --name=cinder --pass="$SERVICE_PASSWORD" --tenant-id $SERVICE_TENANT --email=cinder@teststack.com)
+CINDER_USER=$(get_id keystone user-create --name=cinder --pass="$CINDER_PASS" --tenant-id $SERVICE_TENANT --email=cinder@teststack.com)
 keystone user-role-add --tenant-id $SERVICE_TENANT --user-id $CINDER_USER --role-id $ADMIN_ROLE
 
 echo "########## Begin create ENDPOINT for OPS service ########## "
