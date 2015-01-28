@@ -172,7 +172,6 @@ admin_user = neutron
 admin_password = $NEUTRON_PASS
 
 [database]
-connection = sqlite:////var/lib/neutron/neutron.sqlite
 [service_providers]
 service_provider=LOADBALANCER:Haproxy:neutron.services.loadbalancer.drivers.haproxy.plugin_driver.HaproxyOnHostPluginDriver:default
 service_provider=VPN:openswan:neutron.services.vpn.service_drivers.ipsec.IPsecVPNDriver:default

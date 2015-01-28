@@ -81,25 +81,26 @@ keystone endpoint-create \
 --internalurl=http://controller:8774/v2/%\(tenant_id\)s \
 --adminurl=http://controller:8774/v2/%\(tenant_id\)s
 
-keystone service-create --name neutron --type network --description "OpenStack Networking"
+keystone service-create --name=neutron --type network --description "OpenStack Networking"
 keystone endpoint-create \
---service-id $(keystone service-list | awk '/ network / {print $2}') --publicurl http://controller:9696 \
+--service-id $(keystone service-list | awk '/ network / {print $2}') \
+--publicurl http://controller:9696 \
 --adminurl http://controller:9696 \
 --internalurl http://controller:9696
 
-keystone service-create --name=cinder --type=volume --description="OpenStack Block Storage"
-keystone endpoint-create \
---service-id=$(keystone service-list | awk '/ volume / {print $2}') \
---publicurl=http://controller:8776/v1/%\(tenant_id\)s \
---internalurl=http://controller:8776/v1/%\(tenant_id\)s \
---adminurl=http://controller:8776/v1/%\(tenant_id\)s
+#keystone service-create --name=cinder --type=volume --description="OpenStack Block Storage"
+#keystone endpoint-create \
+#--service-id=$(keystone service-list | awk '/ volume / {print $2}') \
+#--publicurl=http://controller:8776/v1/%\(tenant_id\)s \
+#--internalurl=http://controller:8776/v1/%\(tenant_id\)s \
+#--adminurl=http://controller:8776/v1/%\(tenant_id\)s
 
-keystone service-create --name=cinderv2 --type=volumev2 --description="OpenStack Block Storage v2"
-keystone endpoint-create \
---service-id=$(keystone service-list | awk '/ volumev2 / {print $2}') \
---publicurl=http://controller:8776/v2/%\(tenant_id\)s \
---internalurl=http://controller:8776/v2/%\(tenant_id\)s \
---adminurl=http://controller:8776/v2/%\(tenant_id\)s
+#keystone service-create --name=cinderv2 --type=volumev2 --description="OpenStack Block Storage v2"
+#keystone endpoint-create \
+#--service-id=$(keystone service-list | awk '/ volumev2 / {print $2}') \
+#--publicurl=http://controller:8776/v2/%\(tenant_id\)s \
+#--internalurl=http://controller:8776/v2/%\(tenant_id\)s \
+#--adminurl=http://controller:8776/v2/%\(tenant_id\)s
 
 echo "########## Creating environment script ##########"
 sleep 5
@@ -115,17 +116,12 @@ chmod +x admin-openrc.sh
 
 sleep 5
 echo "########## Execute environment script ##########"
-# source admin-openrc.sh
 cat  admin-openrc.sh >> /etc/profile
 cp  admin-openrc.sh /root/admin-openrc.sh
-
-# export OS_USERNAME=admin
-# export OS_PASSWORD=$ADMIN_PASS
-# export OS_TENANT_NAME=admin
-# export OS_AUTH_URL=http://controller:35357/v2.0
+source admin-openrc.sh
 
 echo "########## Finish setup keystone ##########"
 
-# echo "#################### Testing ##################"
-# sleep 5
-# keystone user-list
+echo "#################### Testing ##################"
+sleep 5
+keystone user-list

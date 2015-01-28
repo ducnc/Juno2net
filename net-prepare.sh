@@ -107,7 +107,13 @@ interface_driver = neutron.agent.linux.interface.OVSInterfaceDriver
 dhcp_driver = neutron.agent.linux.dhcp.Dnsmasq
 use_namespaces = True
 verbose = True
+dnsmasq_config_file = /etc/neutron/dnsmasq-neutron.conf
 EOF
+
+cat << EOF > /etc/neutron/dnsmasq-neutron.conf
+dhcp-option-force=26,1454
+EOF
+
 #
 echo "############  Configuring METADATA AGENT ############"
 sleep 7 
@@ -153,9 +159,8 @@ mechanism_drivers = openvswitch
 flat_networks = external
 
 [ml2_type_vlan]
-tunnel_id_ranges = 1:1000
-
 [ml2_type_gre]
+tunnel_id_ranges = 1:1000
 [ml2_type_vxlan]
 [securitygroup]
 enable_security_group = True
