@@ -1,18 +1,18 @@
 #!/bin/bash -ex
 source ./config.cfg
 
-#apt-get install lvm2 -y
+apt-get install lvm2 -y
 
-#echo "########## Create Physical Volume and Volume Group (in sdb disk ) ##########"
-#fdisk -l
-#pvcreate /dev/sdb
-#vgcreate cinder-volumes /dev/sdb
+echo "########## Create Physical Volume and Volume Group (in sdb disk ) ##########"
+fdisk -l
+pvcreate /dev/sdb
+vgcreate cinder-volumes /dev/sdb
 
 #
 echo "########## Install CINDER ##########"
 sleep 3
-#apt-get install -y cinder-api cinder-scheduler cinder-volume iscsitarget open-iscsi iscsitarget-dkms python-cinderclient
-apt-get install -y cinder-api cinder-scheduler python-cinderclient
+apt-get install -y cinder-api cinder-scheduler cinder-volume iscsitarget open-iscsi iscsitarget-dkms python-cinderclient
+
 
 echo "########## Configuring for cinder.conf ##########"
 
@@ -54,20 +54,19 @@ connection = mysql://cinder:$CINDER_DBPASS@$CON_MGNT_IP/cinder
 
 EOF
 
-#sed  -r -e 's#(filter = )(\[ "a/\.\*/" \])#\1[ "a\/sda1\/", "a\/sdb\/", "r/\.\*\/"]#g' /etc/lvm/lvm.conf
+sed  -r -e 's#(filter = )(\[ "a/\.\*/" \])#\1[ "a\/sda1\/", "a\/sdb\/", "r/\.\*\/"]#g' /etc/lvm/lvm.conf
 
 # Grant permission for cinder
-#chown cinder:cinder $filecinder
+chown cinder:cinder $filecinder
 
 echo "########## Syncing Cinder DB ##########"
 sleep 3
-rm -f /var/lib/cinder/cinder.sqlite
 cinder-manage db sync
 
 echo "########## Restarting CINDER service ##########"
 sleep 3
 service cinder-api restart
 service cinder-scheduler restart
-#service cinder-volume restart
+service cinder-volume restart
 
 echo "########## Finish setting up CINDER !!! ##########"
