@@ -2,13 +2,20 @@
 
 #Khai bao bien
 source ./config.cfg
- 
+
 echo "##### Install MYSQL #####"
 sleep 3
 
 echo mysql-server mysql-server/root_password password $MYSQL_PASS | debconf-set-selections
 echo mysql-server mysql-server/root_password_again password $MYSQL_PASS | debconf-set-selections
-apt-get -y install mariadb-server python-mysqldb curl 
+apt-get -y install mariadb-server python-mysqldb curl
+
+echo "##### Fix MYSQL #####"
+
+touch /var/lib/mysql/debian-5.5.flag
+apt-get -y install mariadb-server python-mysqldb curl
+
+service mysql restart
 
 echo "##### Configuring MYSQL #####"
 sleep 3
